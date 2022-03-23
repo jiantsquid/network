@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.jiantsquid.core.data.Data;
+import org.jiantsquid.core.identity.Identity;
 import org.jiantsquid.core.identity.NetworkIdentity;
 
 
@@ -14,13 +15,13 @@ public class Message {
 
 	private Map<String,String> parameters = new HashMap<>() ;
 	protected Map<String,Data> userData = new HashMap<>() ;
-	private NetworkIdentity from ;
+	private Identity from ;
 	
 	private List<NetworkIdentity> route = new ArrayList<>() ;
 	
 	public Message() {}
 	
-	public Message( NetworkIdentity from, Map<String,String> parameters ) {
+	public Message( Identity from, Map<String,String> parameters ) {
 		if( parameters != null ) {
 			this.parameters.putAll( parameters ) ;
 		}
@@ -55,7 +56,7 @@ public class Message {
 		return parameters.get( parameterName ) ;
 	}
 
-	public NetworkIdentity getFrom() {
+	public Identity getFrom() {
 		return from;
 	}
 	

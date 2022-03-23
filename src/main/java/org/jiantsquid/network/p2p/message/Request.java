@@ -2,7 +2,7 @@ package org.jiantsquid.network.p2p.message;
 
 import java.util.Map;
 
-import org.jiantsquid.core.identity.NetworkIdentity;
+import org.jiantsquid.core.identity.Identity;
 
 public class Request extends Message {
 
@@ -10,7 +10,7 @@ public class Request extends Message {
 	
 	public Request() {}
 	
-	public Request( NetworkIdentity from, String action, Map<String, String> params) {
+	public Request( Identity from, String action, Map<String, String> params) {
 		super(from, params);
 		getParameters_().put( REQUEST_ACTION , action ) ;
 	}

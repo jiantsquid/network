@@ -64,15 +64,13 @@ public abstract class AbstractNode implements NetworkEntityI {
 	
 	Connections connections = new Connections() ;
 	
-	protected AbstractNode( String host, int port ) {
+	protected AbstractNode( String host, int port, AbstractServiceprovider serviceProvider ) {
 		this.port = port ;
 		this.host = host ;
-		serviceProvider = createServiceProvider() ;
+		this.serviceProvider = serviceProvider ;
 		
 		serviceProvider.getLogger().log( getIdentity(), "Start node" ) ;
 	}
-	
-	protected abstract AbstractServiceprovider createServiceProvider() ;
 	
 	protected Peers getPeers() {
 		return connections.getPeers() ;
@@ -92,12 +90,7 @@ public abstract class AbstractNode implements NetworkEntityI {
 	
 	public void start() throws IOException {
 		// start server to process requests
-		startServer();		
-		// connect to known peers
-		connectPeers();
-		
-		connections.clean() ;
-		
+		startServer() ;
 	}
 	
 	private void startServer() throws IOException {
@@ -120,18 +113,7 @@ public abstract class AbstractNode implements NetworkEntityI {
 		// NEED TO CKECK CLIENT LIST CONSISTENCY
 	}
 	
-	
-	private void connectPeers() throws IOException {
-		serviceProvider.getLogger().log( getIdentity(), "connect peers" ) ;
-		for( int i = port+1 ; i < port + 4 && i < port + Network.NB_NODES ; i ++ ) {
-			int p =  i ;
-			if( p != port ) {
-				connectPeer( "localhost", p ) ;
-			}
-		}
-		connections.clean(); 
-	}
-	private void connectPeer( String host, int port ) throws IOException {
+	public void connectPeer( String host, int port ) throws IOException {
 		Peer peer = new Peer( new Connection( host, port ), getIdentity() ) ;
 		serviceProvider.getLogger().log( getIdentity(), "try to connect peer " + peer.getId() ) ;
 		
@@ -157,6 +139,7 @@ public abstract class AbstractNode implements NetworkEntityI {
 				serviceProvider.getLogger().log( getIdentity(), "peer connection failed : " + peer.getId() + " message=" + e.getMessage() ) ;
 			}
 		}
+		connections.clean(); 
 		
 	}
 	

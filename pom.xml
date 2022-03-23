@@ -15,6 +15,16 @@
         <artifactId>org.jiantsquid.core</artifactId>
         <version>0.0.1-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+	    <groupId>com.hazelcast</groupId>
+	    <artifactId>hazelcast</artifactId>
+	    <version>4.2</version>
+	</dependency>
+	<dependency>
+	 <groupId>io.vertx</groupId>
+	 <artifactId>vertx-hazelcast</artifactId>
+	 <version>4.0.3</version>
+	</dependency>
   </dependencies>
   <build>
   <plugins>
